@@ -9,7 +9,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Register application services
-builder.Services.AddScoped<ITodoRepository, InMemoryTodoRepository>();
+builder.Services.AddSingleton<ITodoRepository, InMemoryTodoRepository>();
 builder.Services.AddScoped<TodoService>();
 
 var app = builder.Build();
@@ -76,3 +76,6 @@ app.Run();
 // DTOs
 record CreateTodoRequest(string Text);
 record UpdateTodoRequest(string? Text, bool? IsComplete);
+
+// Make Program class public for testing
+public partial class Program { }
