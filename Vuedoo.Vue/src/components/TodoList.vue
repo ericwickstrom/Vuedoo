@@ -14,7 +14,7 @@ defineEmits<{
 </script>
 
 <template>
-  <ul>
+  <ul class="space-y-3">
     <TodoItem
       v-for="todo in todos"
       :key="todo.id"
