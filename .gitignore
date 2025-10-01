@@ -1,3 +1,19 @@
+# .NET Core
+bin/
+obj/
+*.user
+*.userosscache
+*.suo
+*.cache
+*.dll
+*.pdb
+*.exe
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
 # Node.js
 node_modules/
 npm-debug.log*
@@ -15,11 +31,8 @@ dist-ssr/
 .vscode/
 .idea/
 .DS_Store
-*.suo
 *.ntvs*
 *.njsproj
-*.sln
-*.sw?
 *.iml
 *.code-workspace
 
@@ -31,6 +44,7 @@ dist-ssr/
 # OS files
 Thumbs.db
 Desktop.ini
+*.sw?
 
 # Logs
 logs/
@@ -40,6 +54,7 @@ logs/
 coverage/
 *.lcov
 .nyc_output/
+TestResults/
 
 # TypeScript
 *.tsbuildinfo
