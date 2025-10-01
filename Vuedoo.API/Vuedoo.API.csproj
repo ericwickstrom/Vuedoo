@@ -11,4 +11,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Vuedoo.Application\Vuedoo.Application.csproj" />
+    <ProjectReference Include="..\Vuedoo.Infrastructure\Vuedoo.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

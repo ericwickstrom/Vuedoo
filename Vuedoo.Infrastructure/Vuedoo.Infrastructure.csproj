@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Vuedoo.Domain\Vuedoo.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

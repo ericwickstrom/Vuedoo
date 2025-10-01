@@ -1,9 +1,16 @@
+using Vuedoo.Application.Services;
+using Vuedoo.Domain.Repositories;
+using Vuedoo.Infrastructure.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Register application services
+builder.Services.AddScoped<ITodoRepository, InMemoryTodoRepository>();
+builder.Services.AddScoped<TodoService>();
 
 var app = builder.Build();
 
@@ -16,29 +23,56 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// Temporary user ID for development (until authentication is implemented)
+var tempUserId = Guid.Parse("00000000-0000-0000-0000-000000000001");
 
-app.MapGet("/weatherforecast", () =>
+// GET /api/todos - Get all todos
+app.MapGet("/api/todos", async (TodoService todoService) =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    var todos = await todoService.GetAllTodosAsync(tempUserId);
+    return Results.Ok(todos);
 })
-.WithName("GetWeatherForecast")
+.WithName("GetAllTodos")
+.WithOpenApi();
+
+// GET /api/todos/{id} - Get todo by ID
+app.MapGet("/api/todos/{id:guid}", async (Guid id, TodoService todoService) =>
+{
+    var todo = await todoService.GetTodoByIdAsync(id, tempUserId);
+    return todo is not null ? Results.Ok(todo) : Results.NotFound();
+})
+.WithName("GetTodoById")
+.WithOpenApi();
+
+// POST /api/todos - Create new todo
+app.MapPost("/api/todos", async (CreateTodoRequest request, TodoService todoService) =>
+{
+    var todo = await todoService.CreateTodoAsync(request.Text, tempUserId);
+    return Results.Created($"/api/todos/{todo.Id}", todo);
+})
+.WithName("CreateTodo")
+.WithOpenApi();
+
+// PUT /api/todos/{id} - Update todo
+app.MapPut("/api/todos/{id:guid}", async (Guid id, UpdateTodoRequest request, TodoService todoService) =>
+{
+    var todo = await todoService.UpdateTodoAsync(id, request.Text, request.IsComplete, tempUserId);
+    return todo is not null ? Results.Ok(todo) : Results.NotFound();
+})
+.WithName("UpdateTodo")
+.WithOpenApi();
+
+// DELETE /api/todos/{id} - Delete todo
+app.MapDelete("/api/todos/{id:guid}", async (Guid id, TodoService todoService) =>
+{
+    var deleted = await todoService.DeleteTodoAsync(id, tempUserId);
+    return deleted ? Results.NoContent() : Results.NotFound();
+})
+.WithName("DeleteTodo")
 .WithOpenApi();
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+// DTOs
+record CreateTodoRequest(string Text);
+record UpdateTodoRequest(string? Text, bool? IsComplete);

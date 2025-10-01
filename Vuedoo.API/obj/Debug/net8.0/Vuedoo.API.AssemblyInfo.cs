@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Vuedoo.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74b459472640613fb7f72b0cd7fed0033b7bff77")]
 [assembly: System.Reflection.AssemblyProductAttribute("Vuedoo.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Vuedoo.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
