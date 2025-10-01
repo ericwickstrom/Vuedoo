@@ -7,9 +7,9 @@ import { useToast } from '@/composables/useToast'
 const { showToast } = useToast()
 
 const todos = ref<Todo[]>([
-  { id: 1, text: "Learn Vue", isComplete: false },
-  { id: 2, text: "Build todo app", isComplete: true },
-  { id: 3, text: "Deploy to AWS", isComplete: false }
+  { id: '1', text: "Learn Vue", isComplete: false },
+  { id: '2', text: "Build todo app", isComplete: true },
+  { id: '3', text: "Deploy to AWS", isComplete: false }
 ])
 
 const newTodoText = ref('')
@@ -17,7 +17,7 @@ const newTodoText = ref('')
 const addTodo = () => {
   if (newTodoText.value.trim()) {
     todos.value.push({
-      id: Date.now(),
+      id: Date.now().toString(),
       text: newTodoText.value,
       isComplete: false
     })
@@ -28,7 +28,7 @@ const addTodo = () => {
   }
 }
 
-const toggleTodo = (id: number) => {
+const toggleTodo = (id: string) => {
   const todo = todos.value.find(t => t.id === id)
   if (todo) {
     todo.isComplete = !todo.isComplete
@@ -40,7 +40,7 @@ const toggleTodo = (id: number) => {
   }
 }
 
-const deleteTodo = (id: number) => {
+const deleteTodo = (id: string) => {
   todos.value = todos.value.filter(todo => todo.id !== id)
   showToast('Todo deleted', 'info')
 }

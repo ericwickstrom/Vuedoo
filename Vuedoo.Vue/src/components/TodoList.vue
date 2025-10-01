@@ -8,8 +8,8 @@ interface Props {
 
 defineProps<Props>()
 defineEmits<{
-  toggleTodo: [id: number]
-  deleteTodo: [id: number]
+  toggleTodo: [id: string]
+  deleteTodo: [id: string]
 }>()
 </script>
 

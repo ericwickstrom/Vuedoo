@@ -7,8 +7,8 @@ interface Props {
 
 defineProps<Props>()
 defineEmits<{
-  toggle: [id: number]
-  delete: [id: number]
+  toggle: [id: string]
+  delete: [id: string]
 }>()
 </script>
 
